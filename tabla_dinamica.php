@@ -1,5 +1,4 @@
 <?php
-//include_once("paramconexion.php");
 
 /* --------------------------------------- */
 function conectar($maq, $usu, $con, $bas){
@@ -16,7 +15,8 @@ return $conexion;
 /* --------------------------------------- */
 
 function tabla_dinamica (){
-  include_once("paramconexion.php");
+  include_once("paramconexion.php"); /* En este fichero paramconexion.php definimos las variables que utilizo para llamar a
+                                        la función siguiente */
   $conexion=conectar($maquina,$usuario,$contrasena,$basededatos);
   $resultado=$conexion->query("Select * from viajes");
   //printf("<p>La selección devolvió %d filas y %d columnas.</p>\n", $resultado->num_rows, $resultado->field_count);
