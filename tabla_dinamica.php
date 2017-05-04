@@ -18,7 +18,9 @@ function tabla_dinamica (){
   include_once("paramconexion.php"); /* En este fichero paramconexion.php definimos las variables que utilizo para llamar a
                                         la función siguiente */
   $conexion=conectar($maquina,$usuario,$contrasena,$basededatos);
-  $resultado=$conexion->query("Select * from viajes");
+    
+    // Asignar valor a $tabla o modificar la consulta a continuación
+  $resultado=$conexion->query("Select * from %s",$tabla);
   //printf("<p>La selección devolvió %d filas y %d columnas.</p>\n", $resultado->num_rows, $resultado->field_count);
   echo "<table><tr>";
   /* Obtener la información del campo para todas las columnas */
