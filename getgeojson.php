@@ -1,5 +1,5 @@
 <?php
-header('Content-type: text/plain');
+//header('Content-type: text/plain');
 $username = "[user]";
 $password = "[password]";
 $hostname = "localhost";	
@@ -7,20 +7,15 @@ $database = "[database]";
 
 
 // Opens a connection to a mySQL server
-$connection=mysql_connect ($hostname, $username, $password);
-if (!$connection) {
-  die('Not connected : ' . mysql_error());
-}
+$conexion = new mysqli($hostname, $username, $password, $database);
 
-// Set the active mySQL database
-$db_selected = mysql_select_db($database, $connection);
-if (!$db_selected) {
-  die ('Can\'t use db : ' . mysql_error());
+if (!$conexion) {
+  die('Not connected : ' . mysql_error());
 }
 
 // json output - insert table name below after "FROM"
 $query = 'SELECT * FROM survey';
-$dbquery = mysql_query($query);
+$dbquery = $conexion->query($query);
 
 if(! $dbquery )
 {
@@ -32,12 +27,14 @@ if(! $dbquery )
 // ================================================
 // Return markers as GeoJSON
 
+$feature=array();
+
 $geojson = array(
     'type'      => 'FeatureCollection',
     'features'  => $feature
  );
 
-while($row = mysql_fetch_assoc($dbquery)) {
+while($row = $dbquery->fetch_assoc()) {
     $feature = array(
         'type' => 'Feature', 
       'geometry' => array(
@@ -49,9 +46,9 @@ while($row = mysql_fetch_assoc($dbquery)) {
         //Other fields here, end without a comma
             )
         );
-    array_push($geojson, $feature);
+    array_push($geojson['features'], $feature);
 };
-mysql_close($connection);
+$conexion->close();
 
 // // Return routing result
     header("Content-Type:application/json",true);
