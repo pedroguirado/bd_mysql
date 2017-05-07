@@ -51,6 +51,6 @@ while($row = $dbquery->fetch_assoc()) {
 $conexion->close();
 
 // // Return routing result
-    header("Content-Type:application/json",true);
+//    header("Content-Type:application/json",true);
     echo json_encode($geojson);
 ?>
